@@ -12,7 +12,6 @@ namespace ComicBookGallery.Controllers
     /// Our Controller class.
     /// "Conroller" suffix is mandatory, for Visual Studio to distinguish controllers.
     /// Must extend the Controller class
-    /// </summary>
     public class ComicBooksController : Controller
     {
         // Default url routing <host>/<controller name>/<method name>
@@ -29,34 +28,32 @@ namespace ComicBookGallery.Controllers
         // ContentResult and RedirectResult extend ActionResult
         public ActionResult Detail()
         {
+            // set data to a ViewBag (objec to pass data from Controller to a View)
+            ViewBag.SeriesTitle = "The Amazing Spider-Man";
+            ViewBag.IssueNumber = 700;
+            ViewBag.Description = "<p>Final issue! Witness the final hours of Doctor Octopus' life and his one, last, great act of revenge! Even if Spider-Man survives... <strong>will Peter Parker?</strong></p>";
+            ViewBag.Artists = new string[]
+            {
+                "Script: Dan Slott",
+                "Pencils: Humberto Ramos",
+                "Inks: Victor Olazaba",
+                "Colors: Edgar Delgado",
+                "Letters: Chris Eliopoulos"
+            };
+
+
+            return View();
+            /* By default (without specified name - uses method name (Details)) will look in those folders:
+                ~/Views/Comicbooks/details.aspx
+                ~/Views/Comicbooks/details.ascx
+                ~/Views/Shared/details.aspx
+                ~/Views/Shared/details.ascx
+                ~/Views/Comicbooks/details.cshtml
+                ~/Views/Comicbooks/details.vbhtml
+                ~/Views/Shared/details.cshtml
+                ~/Views/Shared/details.vbhtml
+                */
             
-            if (DateTime.Today.DayOfWeek == DayOfWeek.Thursday)
-            {
-                // redirect user to the main page if it is wednesday today
-                // NOTE: will redirect to <host>/ rather than <host>/<controller name>/
-                return new RedirectResult("/");
-            }else if (DateTime.Today.DayOfWeek == DayOfWeek.Monday)
-            {
-                // ContentResult is a return type MVC provides
-                return new ContentResult()
-                {
-                    Content = "Hello from the comic books controller!"
-                };
-            }
-            else
-            {
-                return View();
-                /* By default (without specified name - uses method name (Details)) will look in those folders:
-                    ~/Views/Comicbooks/details.aspx
-                    ~/Views/Comicbooks/details.ascx
-                    ~/Views/Shared/details.aspx
-                    ~/Views/Shared/details.ascx
-                    ~/Views/Comicbooks/details.cshtml
-                    ~/Views/Comicbooks/details.vbhtml
-                    ~/Views/Shared/details.cshtml
-                    ~/Views/Shared/details.vbhtml
-                 */
-            }
 
         }
 
@@ -85,9 +82,10 @@ namespace ComicBookGallery.Controllers
             return a + b + "";
         }
 
-        public string Index()
+        public ActionResult Index()
         {
-            return "This is ComicBooks Controller's index page";
+            //return "This is ComicBooks Controller's index page";
+            return new RedirectResult("/ComicBooks/Detail");
         }
     }
 }

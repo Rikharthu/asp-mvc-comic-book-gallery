@@ -1,5 +1,20 @@
-﻿@{
+﻿<!--Switch to Razor, c# code-->
+@{
+    // we are not using the layout page
     Layout = null;
+
+    // Moved to the Controller
+    //var seriesTitle = "The Amazing Spider-Man";
+    //var issueNumber = 700;
+    //var description = "<p>Final issue! Witness the final hours of Doctor Octopus' life and his one, last, great act of revenge! Even if Spider-Man survives... <strong>will Peter Parker?</strong></p>";
+    //var artists = new string[]
+    //{
+    //    "Script: Dan Slott",
+    //    "Pencils: Humberto Ramos",
+    //    "Inks: Victor Olazaba",
+    //    "Colors: Edgar Delgado",
+    //    "Letters: Chris Eliopoulos"
+    //};
 }
 
 <!DOCTYPE html>
@@ -10,8 +25,30 @@
     <title></title>
 </head>
 <body>
-    <div>
-        <h1>Hello from our view!</h1>
-    </div>
+<div>
+    <!--Use c# variables described above-->
+    <h1>@ViewBag.SeriesTitle</h1>
+    <h2>Issue #@ViewBag.IssueNumber</h2>
+    
+    <h5>Description:</h5>
+    <div>@Html.Raw(ViewBag.Description)</div><!--Html.Raw prevents escaping the html tags-->
+    
+    @if (ViewBag.Artists.Length>0)
+    {
+        <h5>Artists:</h5>
+        <div>
+            <ul>
+                @foreach (var artist in ViewBag.Artists)
+                {
+                    // between <text> element we let razor know
+                    // that we want to switch from writing code
+                    // to write text content
+                    //<text>*@artist</text>
+                    <li>*@artist</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
 </body>
 </html>
